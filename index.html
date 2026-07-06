@@ -1,564 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lexicon — word lookup</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --beige: #EDE6D3;
-    --beige-deep: #E2D8BE;
-    --beige-line: #CBBE9C;
-    --ink: #1B1812;
-    --ink-soft: #57503F;
-    --chip: #DCD0AE;
-  }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lexicon — word lookup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --beige: #EDE6D3;
+            --beige-deep: #E2D8BE;
+            --beige-line: #CBBE9C;
+            --ink: #1B1812;
+            --ink-soft: #57503F;
+            --chip: #DCD0AE;
+        }
 
-  * { box-sizing: border-box; }
+        * { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    background: var(--beige);
-    color: var(--ink);
-    font-family: 'Source Serif 4', serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 40px 16px 80px;
-  }
+        body {
+            margin: 0;
+            background: var(--beige);
+            color: var(--ink);
+            font-family: 'Source Serif 4', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 16px 80px;
+        }
 
-  .card {
-    width: 100%;
-    max-width: 560px;
-    background: var(--beige);
-  }
+        .card {
+            width: 100%;
+            max-width: 560px;
+            background: var(--beige);
+        }
 
-  .eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 4px;
-  }
+        .eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 4px;
+        }
 
-  h1.masthead {
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: 700;
-    font-size: 26px;
-    margin: 0 0 22px;
-    color: var(--ink);
-    letter-spacing: 0.01em;
-  }
+        h1.masthead {
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: 700;
+            font-size: 26px;
+            margin: 0 0 22px;
+            color: var(--ink);
+            letter-spacing: 0.01em;
+        }
 
-  form.lookup {
-    display: flex;
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 28px;
-  }
+        form.lookup {
+            display: flex;
+            border: 2px solid var(--ink);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
 
-  form.lookup input {
-    flex: 1;
-    border: none;
-    background: var(--beige-deep);
-    font-family: 'Source Serif 4', serif;
-    font-size: 18px;
-    padding: 12px 16px;
-    outline: none;
-    color: var(--ink);
-  }
+        form.lookup input {
+            flex: 1;
+            border: none;
+            background: var(--beige-deep);
+            font-family: 'Source Serif 4', serif;
+            font-size: 18px;
+            padding: 12px 16px;
+            outline: none;
+            color: var(--ink);
+        }
 
-  form.lookup input::placeholder { color: var(--ink-soft); font-style: italic; }
+        form.lookup input::placeholder { color: var(--ink-soft); font-style: italic; }
 
-  form.lookup button {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: var(--beige);
-    border: none;
-    padding: 0 22px;
-    cursor: pointer;
-  }
-  form.lookup button:disabled { opacity: 0.5; cursor: default; }
+        form.lookup button {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: var(--ink);
+            color: var(--beige);
+            border: none;
+            padding: 0 22px;
+            cursor: pointer;
+        }
+        form.lookup button:disabled { opacity: 0.5; cursor: default; }
 
-  .state {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: var(--ink-soft);
-    text-align: center;
-    padding: 30px 0;
-    display: none;
-  }
-  .state.visible { display: block; }
-  .state.error { color: #7A2E1E; }
+        .state {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--ink-soft);
+            text-align: center;
+            padding: 30px 0;
+            display: none;
+        }
+        .state.visible { display: block; }
+        .state.error { color: #7A2E1E; }
 
-  .entry { display: none; }
-  .entry.visible { display: block; animation: rise 0.25s ease; }
+        .entry { display: none; }
+        .entry.visible { display: block; animation: rise 0.25s ease; }
 
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-  .panel {
-    background: var(--beige-deep);
-    border: 1px solid var(--beige-line);
-    border-radius: 14px;
-    padding: 26px 24px;
-  }
+        .panel {
+            background: var(--beige-deep);
+            border: 1px solid var(--beige-line);
+            border-radius: 14px;
+            padding: 26px 24px;
+        }
 
-  .headline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .headline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-  .audio-btn {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    border: 2px solid var(--ink);
-    background: var(--ink);
-    color: var(--beige);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .audio-btn svg { width: 16px; height: 16px; fill: var(--beige); }
-  .audio-btn.hidden { display: none; }
+        .audio-btn {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--ink);
+            background: var(--ink);
+            color: var(--beige);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .audio-btn svg { width: 16px; height: 16px; fill: var(--beige); }
+        .audio-btn.hidden { display: none; }
 
-  .headword {
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: 700;
-    font-size: 30px;
-    color: var(--ink);
-  }
+        .headword {
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: 700;
+            font-size: 30px;
+            color: var(--ink);
+        }
 
-  .phonetic {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    color: var(--ink-soft);
-  }
+        .phonetic {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--ink-soft);
+        }
 
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin: 18px 0 22px;
-    flex-wrap: wrap;
-  }
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin: 18px 0 22px;
+            flex-wrap: wrap;
+        }
 
-  .tab {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    cursor: pointer;
-  }
-  .tab.active { background: var(--ink); color: var(--beige); }
+        .tab {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            padding: 7px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--ink);
+            background: transparent;
+            color: var(--ink);
+            cursor: pointer;
+        }
+        .tab.active { background: var(--ink); color: var(--beige); }
 
-  .tabpanel { display: none; }
-  .tabpanel.active { display: block; }
+        .tabpanel { display: none; }
+        .tabpanel.active { display: block; }
 
-  .meaning { margin-bottom: 24px; }
-  .meaning:last-child { margin-bottom: 0; }
+        .meaning { margin-bottom: 24px; }
+        .meaning:last-child { margin-bottom: 0; }
 
-  .pos {
-    font-family: 'Inter', sans-serif;
-    font-style: italic;
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
-  }
+        .pos {
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--ink-soft);
+            margin-bottom: 10px;
+        }
 
-  ol.definitions {
-    margin: 0;
-    padding-left: 20px;
-  }
+        ol.definitions {
+            margin: 0;
+            padding-left: 20px;
+        }
 
-  ol.definitions li {
-    margin-bottom: 14px;
-    font-size: 17px;
-    line-height: 1.5;
-  }
-  ol.definitions li::marker {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    color: var(--ink-soft);
-  }
+        ol.definitions li {
+            margin-bottom: 14px;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+        ol.definitions li::marker {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: var(--ink-soft);
+        }
 
-  .example {
-    display: block;
-    font-style: italic;
-    color: var(--ink-soft);
-    font-size: 15px;
-    margin-top: 4px;
-  }
+        .example {
+            display: block;
+            font-style: italic;
+            color: var(--ink-soft);
+            font-size: 15px;
+            margin-top: 4px;
+        }
 
-  .chip-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 6px;
-  }
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
 
-  .chip {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    background: var(--chip);
-    border: 1px solid var(--beige-line);
-    border-radius: 16px;
-    padding: 5px 14px;
-    color: var(--ink);
-  }
+        .chip {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            background: var(--chip);
+            border: 1px solid var(--beige-line);
+            border-radius: 16px;
+            padding: 5px 14px;
+            color: var(--ink);
+        }
 
-  .similar-group { margin-bottom: 20px; }
-  .similar-group:last-child { margin-bottom: 0; }
-  .similar-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 8px;
-  }
+        .similar-group { margin-bottom: 20px; }
+        .similar-group:last-child { margin-bottom: 0; }
+        .similar-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 8px;
+        }
 
-  .empty-note {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-style: italic;
-  }
+        .empty-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--ink-soft);
+            font-style: italic;
+        }
 
-  .section {
-    margin-top: 18px;
-    display: none;
-  }
-  .section.visible { display: block; }
+        .section {
+            margin-top: 18px;
+            display: none;
+        }
+        .section.visible { display: block; }
 
-  .section-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 15px;
-    letter-spacing: 0.06em;
-    color: var(--ink);
-    margin-bottom: 16px;
-  }
+        .section-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 15px;
+            letter-spacing: 0.06em;
+            color: var(--ink);
+            margin-bottom: 16px;
+        }
 
-  .chain {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0;
-  }
+        .chain {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0;
+        }
 
-  .chain-node {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    background: var(--chip);
-    border: 1px solid var(--ink);
-    border-radius: 8px;
-    padding: 8px 14px;
-    color: var(--ink);
-    max-width: 220px;
-  }
+        .chain-node {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            background: var(--chip);
+            border: 1px solid var(--ink);
+            border-radius: 8px;
+            padding: 8px 14px;
+            color: var(--ink);
+            max-width: 220px;
+        }
 
-  .chain-arrow {
-    font-family: 'Inter', sans-serif;
-    color: var(--ink-soft);
-    margin: 0 8px;
-    font-size: 16px;
-  }
+        .chain-arrow {
+            font-family: 'Inter', sans-serif;
+            color: var(--ink-soft);
+            margin: 0 8px;
+            font-size: 16px;
+        }
 
-  .etymology-text {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink);
-    margin-top: 14px;
-  }
+        .etymology-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink);
+            margin-top: 14px;
+        }
 
-  .usage-caption {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-  }
+        .usage-caption {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--ink-soft);
+            margin-top: 6px;
+        }
 
-  footer {
-    text-align: center;
-    margin-top: 40px;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    color: var(--ink-soft);
-    letter-spacing: 0.03em;
-  }
-</style>
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: var(--ink-soft);
+            letter-spacing: 0.03em;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <div class="eyebrow">Dictionary</div>
-    <h1 class="masthead">Lexicon</h1>
+    <div class="card">
+        <div class="eyebrow">Dictionary</div>
+        <h1 class="masthead">Lexicon</h1>
 
-    <form class="lookup" id="lookupForm">
-      <input id="wordInput" type="text" placeholder="type a word…" autocomplete="off" autofocus />
-      <button type="submit" id="lookupBtn">Define</button>
-    </form>
+        <form class="lookup" id="lookupForm">
+            <input id="wordInput" type="text" placeholder="type a word…" autocomplete="off" autofocus />
+            <button type="submit" id="lookupBtn">Define</button>
+        </form>
 
-    <div class="state" id="loadingState">Turning the page…</div>
-    <div class="state error" id="errorState"></div>
+        <div class="state" id="loadingState">Turning the page…</div>
+        <div class="state error" id="errorState"></div>
 
-    <div class="entry" id="entry">
-      <div class="panel">
-        <div class="headline">
-          <button class="audio-btn hidden" id="audioBtn" title="Play pronunciation">
-            <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          </button>
-          <span class="headword" id="entryWord"></span>
-          <span class="phonetic" id="entryPhonetic"></span>
+        <div class="entry" id="entry">
+            <div class="panel">
+                <div class="headline">
+                    <button class="audio-btn hidden" id="audioBtn" title="Play pronunciation">
+                        <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                    <span class="headword" id="entryWord"></span>
+                    <span class="phonetic" id="entryPhonetic"></span>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active" data-tab="overview">Overview</button>
+                    <button class="tab" data-tab="similar">Similar words</button>
+                </div>
+
+                <div class="tabpanel active" id="tab-overview">
+                    <div id="meanings"></div>
+                </div>
+
+                <div class="tabpanel" id="tab-similar">
+                    <div id="similarContent"></div>
+                </div>
+            </div>
+
+            <div class="section panel" id="originSection">
+                <div class="section-title">Origin</div>
+                <div class="chain" id="originChain"></div>
+                <div class="etymology-text" id="originText"></div>
+            </div>
+
+            <div class="section panel" id="usageSection">
+                <div class="section-title">Usage over time</div>
+                <div id="usageChart"></div>
+                <div class="usage-caption" id="usageCaption"></div>
+            </div>
         </div>
 
-        <div class="tabs">
-          <button class="tab active" data-tab="overview">Overview</button>
-          <button class="tab" data-tab="similar">Similar words</button>
-        </div>
-
-        <div class="tabpanel active" id="tab-overview">
-          <div id="meanings"></div>
-        </div>
-
-        <div class="tabpanel" id="tab-similar">
-          <div id="similarContent"></div>
-        </div>
-      </div>
-
-      <div class="section panel" id="originSection">
-        <div class="section-title">Origin</div>
-        <div class="chain" id="originChain"></div>
-        <div class="etymology-text" id="originText"></div>
-      </div>
-
-      <div class="section panel" id="usageSection">
-        <div class="section-title">Usage over time</div>
-        <div id="usageChart"></div>
-        <div class="usage-caption" id="usageCaption"></div>
-      </div>
+        <footer>Definitions from the Free Dictionary API · Origin from Merriam-Webster · Usage from Google Ngram Viewer</footer>
     </div>
 
-    <footer>Definitions from the Free Dictionary API · Origin from Merriam-Webster · Usage from Google Ngram Viewer</footer>
-  </div>
+    <script>
+        const API_BASE = "https://aditijha.pythonanywhere.com/";
 
-<script>
-  // Change this to your PythonAnywhere backend URL once deployed, e.g.
-  // const API_BASE = "https://yourusername.pythonanywhere.com";
-  const API_BASE = "https://aditijha.pythonanywhere.com/";
+        const form = document.getElementById('lookupForm');
+        const input = document.getElementById('wordInput');
+        const btn = document.getElementById('lookupBtn');
+        const loading = document.getElementById('loadingState');
+        const errorEl = document.getElementById('errorState');
+        const entry = document.getElementById('entry');
+        const entryWord = document.getElementById('entryWord');
+        const entryPhonetic = document.getElementById('entryPhonetic');
+        const audioBtn = document.getElementById('audioBtn');
+        const meaningsEl = document.getElementById('meanings');
+        const similarEl = document.getElementById('similarContent');
+        const tabs = document.querySelectorAll('.tab');
+        const tabpanels = document.querySelectorAll('.tabpanel');
+        const originSection = document.getElementById('originSection');
+        const originChain = document.getElementById('originChain');
+        const originText = document.getElementById('originText');
+        const usageSection = document.getElementById('usageSection');
+        const usageChart = document.getElementById('usageChart');
+        const usageCaption = document.getElementById('usageCaption');
 
-  const form = document.getElementById('lookupForm');
-  const input = document.getElementById('wordInput');
-  const btn = document.getElementById('lookupBtn');
-  const loading = document.getElementById('loadingState');
-  const errorEl = document.getElementById('errorState');
-  const entry = document.getElementById('entry');
-  const entryWord = document.getElementById('entryWord');
-  const entryPhonetic = document.getElementById('entryPhonetic');
-  const audioBtn = document.getElementById('audioBtn');
-  const meaningsEl = document.getElementById('meanings');
-  const similarEl = document.getElementById('similarContent');
-  const tabs = document.querySelectorAll('.tab');
-  const tabpanels = document.querySelectorAll('.tabpanel');
-  const originSection = document.getElementById('originSection');
-  const originChain = document.getElementById('originChain');
-  const originText = document.getElementById('originText');
-  const usageSection = document.getElementById('usageSection');
-  const usageChart = document.getElementById('usageChart');
-  const usageCaption = document.getElementById('usageCaption');
+        let currentAudio = null;
 
-  let currentAudio = null;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((t) => t.classList.remove('active'));
-      tabpanels.forEach((p) => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
-    });
-  });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const word = input.value.trim();
-    if (!word) return;
-    await lookup(word);
-  });
-
-  async function lookup(word) {
-    entry.classList.remove('visible');
-    originSection.classList.remove('visible');
-    usageSection.classList.remove('visible');
-    errorEl.classList.remove('visible');
-    loading.classList.add('visible');
-    btn.disabled = true;
-
-    try {
-      const res = await fetch(`${API_BASE}/api/define/${encodeURIComponent(word)}`);
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Something went wrong');
-      }
-
-      renderEntry(data);
-      loadOrigin(word);
-      loadUsage(word);
-    } catch (err) {
-      errorEl.textContent = err.message || 'Could not fetch that word.';
-      errorEl.classList.add('visible');
-    } finally {
-      loading.classList.remove('visible');
-      btn.disabled = false;
-    }
-  }
-
-  async function loadOrigin(word) {
-    originSection.classList.remove('visible');
-    try {
-      const res = await fetch(`${API_BASE}/api/origin/${encodeURIComponent(word)}`);
-      const data = await res.json();
-      if (!res.ok) return; // silently skip -- origin data is a bonus, not core
-
-      originChain.innerHTML = '';
-      if (data.chain && data.chain.length > 1) {
-        data.chain.forEach((step, i) => {
-          const node = document.createElement('span');
-          node.className = 'chain-node';
-          node.textContent = step;
-          originChain.appendChild(node);
-          if (i < data.chain.length - 1) {
-            const arrow = document.createElement('span');
-            arrow.className = 'chain-arrow';
-            arrow.textContent = '→';
-            originChain.appendChild(arrow);
-          }
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach((t) => t.classList.remove('active'));
+                tabpanels.forEach((p) => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+            });
         });
-      }
-      originText.textContent = data.etymology || '';
-      originSection.classList.add('visible');
-    } catch (err) {
-      // Origin is a bonus feature -- fail quietly so it never blocks the main lookup
-    }
-  }
 
-  async function loadUsage(word) {
-    usageSection.classList.remove('visible');
-    try {
-      const res = await fetch(`${API_BASE}/api/usage/${encodeURIComponent(word)}`);
-      const data = await res.json();
-      if (!res.ok || !data.years || !data.years.length) return;
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const word = input.value.trim();
+            if (!word) return;
+            await lookup(word);
+        });
 
-      drawUsageChart(data.years, data.values);
-      usageCaption.textContent = `Relative frequency in Google Books, ${data.years[0]}–${data.years[data.years.length - 1]}`;
-      usageSection.classList.add('visible');
-    } catch (err) {
-      // Usage chart is a bonus feature -- fail quietly
-    }
-  }
+        async function lookup(word) {
+            entry.classList.remove('visible');
+            originSection.classList.remove('visible');
+            usageSection.classList.remove('visible');
+            errorEl.classList.remove('visible');
+            loading.classList.add('visible');
+            btn.disabled = true;
 
-  function drawUsageChart(years, values) {
-    const width = 500;
-    const height = 140;
-    const padding = 8;
-    const maxVal = Math.max(...values, 0.0000001);
+            try {
+                const res = await fetch(`${API_BASE}/api/define/${encodeURIComponent(word)}`);
+                const data = await res.json();
 
-    const points = values.map((v, i) => {
-      const x = padding + (i / (values.length - 1)) * (width - padding * 2);
-      const y = height - padding - (v / maxVal) * (height - padding * 2);
-      return `${x},${y}`;
-    }).join(' ');
+                if (!res.ok) {
+                    throw new Error(data.error || 'Something went wrong');
+                }
 
-    usageChart.innerHTML = `
-      <svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" xmlns="http://www.w3.org/2000/svg">
-        <polyline points="${points}" fill="none" style="stroke:var(--ink); stroke-width:2.5" />
-      </svg>
-    `;
-  }
-
-  function renderEntry(data) {
-    entryWord.textContent = data.word;
-    entryPhonetic.textContent = data.phonetic || '';
-
-    currentAudio = data.audio || null;
-    audioBtn.classList.toggle('hidden', !currentAudio);
-
-    tabs.forEach((t) => t.classList.remove('active'));
-    tabpanels.forEach((p) => p.classList.remove('active'));
-    document.querySelector('.tab[data-tab="overview"]').classList.add('active');
-    document.getElementById('tab-overview').classList.add('active');
-
-    meaningsEl.innerHTML = '';
-    similarEl.innerHTML = '';
-    let anySynonyms = false;
-
-    data.meanings.forEach((m) => {
-      const block = document.createElement('div');
-      block.className = 'meaning';
-
-      const posEl = document.createElement('div');
-      posEl.className = 'pos';
-      posEl.textContent = m.partOfSpeech;
-      block.appendChild(posEl);
-
-      const list = document.createElement('ol');
-      list.className = 'definitions';
-      m.definitions.forEach((d) => {
-        const li = document.createElement('li');
-        li.textContent = d.definition;
-        if (d.example) {
-          const ex = document.createElement('span');
-          ex.className = 'example';
-          ex.textContent = `"${d.example}"`;
-          li.appendChild(ex);
+                renderEntry(data);
+                loadOrigin(word);
+                loadUsage(word);
+            } catch (err) {
+                errorEl.textContent = err.message || 'Could not fetch that word.';
+                errorEl.classList.add('visible');
+            } finally {
+                loading.classList.remove('visible');
+                btn.disabled = false;
+            }
         }
-        list.appendChild(li);
-      });
-      block.appendChild(list);
-      meaningsEl.appendChild(block);
 
-      if (m.synonyms && m.synonyms.length) {
-        anySynonyms = true;
-        const group = document.createElement('div');
-        group.className = 'similar-group';
+        async function loadOrigin(word) {
+            originSection.classList.remove('visible');
+            try {
+                const res = await fetch(`${API_BASE}/api/origin/${encodeURIComponent(word)}`);
+                const data = await res.json();
+                if (!res.ok) return;
 
-        const label = document.createElement('div');
-        label.className = 'similar-label';
-        label.textContent = m.partOfSpeech;
-        group.appendChild(label);
+                originChain.innerHTML = '';
+                if (data.chain && data.chain.length > 1) {
+                    data.chain.forEach((step, i) => {
+                        const node = document.createElement('span');
+                        node.className = 'chain-node';
+                        node.textContent = step;
+                        originChain.appendChild(node);
+                        if (i < data.chain.length - 1) {
+                            const arrow = document.createElement('span');
+                            arrow.className = 'chain-arrow';
+                            arrow.textContent = '→';
+                            originChain.appendChild(arrow);
+                        }
+                    });
+                }
+                originText.textContent = data.etymology || '';
+                originSection.classList.add('visible');
+            } catch (err) {}
+        }
 
-        const row = document.createElement('div');
-        row.className = 'chip-row';
-        m.synonyms.forEach((s) => {
-          const chip = document.createElement('span');
-          chip.className = 'chip';
-          chip.textContent = s;
-          row.appendChild(chip);
+        async function loadUsage(word) {
+            usageSection.classList.remove('visible');
+            try {
+                const res = await fetch(`${API_BASE}/api/usage/${encodeURIComponent(word)}`);
+                const data = await res.json();
+                if (!res.ok || !data.years || !data.years.length) return;
+
+                drawUsageChart(data.years, data.values);
+                usageCaption.textContent = `Relative frequency in Google Books, ${data.years[0]}–${data.years[data.years.length - 1]}`;
+                usageSection.classList.add('visible');
+            } catch (err) {}
+        }
+
+        function drawUsageChart(years, values) {
+            const width = 500;
+            const height = 160;
+            const padTop = 14;
+            const padBottom = 34;
+            const padSide = 10;
+
+            const trimmedYears = years.slice(0, Math.max(years.length - 2, 1));
+            const trimmedValues = values.slice(0, Math.max(values.length - 2, 1));
+
+            const maxVal = Math.max(...trimmedValues, 0.0000001);
+            const plotWidth = width - padSide * 2;
+            const plotHeight = height - padTop - padBottom;
+
+            const points = trimmedValues.map((v, i) => {
+                const x = padSide + (i / (trimmedValues.length - 1)) * plotWidth;
+                const y = padTop + plotHeight - (v / maxVal) * plotHeight;
+                return `${x},${y}`;
+            }).join(' ');
+
+            const baselineY = padTop + plotHeight;
+
+            const gridCount = 4;
+            let gridlines = '';
+            let yearLabels = '';
+            for (let i = 0; i <= gridCount; i++) {
+                const idx = Math.round((i / gridCount) * (trimmedYears.length - 1));
+                const x = padSide + (idx / (trimmedValues.length - 1)) * plotWidth;
+                gridlines += `<line x1="${x}" y1="${padTop}" x2="${x}" y2="${baselineY}" style="stroke:var(--beige-line); stroke-width:1" />`;
+                yearLabels += `<text x="${x}" y="${height - 10}" text-anchor="middle" style="font-family:Inter,sans-serif; font-size:10px; fill:var(--ink-soft);">${trimmedYears[idx]}</text>`;
+            }
+
+            usageChart.innerHTML = `
+                <svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" xmlns="http://www.w3.org/2000/svg">
+                    ${gridlines}
+                    <line x1="${padSide}" y1="${baselineY}" x2="${width - padSide}" y2="${baselineY}" style="stroke:var(--ink); stroke-width:1" />
+                    <polyline points="${points}" fill="none" style="stroke:var(--ink); stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round" />
+                    ${yearLabels}
+                </svg>
+            `;
+        }
+
+        function renderEntry(data) {
+            entryWord.textContent = data.word;
+            entryPhonetic.textContent = data.phonetic || '';
+
+            currentAudio = data.audio || null;
+            audioBtn.classList.toggle('hidden', !currentAudio);
+
+            tabs.forEach((t) => t.classList.remove('active'));
+            tabpanels.forEach((p) => p.classList.remove('active'));
+            document.querySelector('.tab[data-tab="overview"]').classList.add('active');
+            document.getElementById('tab-overview').classList.add('active');
+
+            meaningsEl.innerHTML = '';
+            similarEl.innerHTML = '';
+            let anySynonyms = false;
+
+            data.meanings.forEach((m) => {
+                const block = document.createElement('div');
+                block.className = 'meaning';
+
+                const posEl = document.createElement('div');
+                posEl.className = 'pos';
+                posEl.textContent = m.partOfSpeech;
+                block.appendChild(posEl);
+
+                const list = document.createElement('ol');
+                list.className = 'definitions';
+                m.definitions.forEach((d) => {
+                    const li = document.createElement('li');
+                    li.textContent = d.definition;
+                    if (d.example) {
+                        const ex = document.createElement('span');
+                        ex.className = 'example';
+                        ex.textContent = `"${d.example}"`;
+                        li.appendChild(ex);
+                    }
+                    list.appendChild(li);
+                });
+                block.appendChild(list);
+                meaningsEl.appendChild(block);
+
+                if (m.synonyms && m.synonyms.length) {
+                    anySynonyms = true;
+                    const group = document.createElement('div');
+                    group.className = 'similar-group';
+
+                    const label = document.createElement('div');
+                    label.className = 'similar-label';
+                    label.textContent = m.partOfSpeech;
+                    group.appendChild(label);
+
+                    const row = document.createElement('div');
+                    row.className = 'chip-row';
+                    m.synonyms.forEach((s) => {
+                        const chip = document.createElement('span');
+                        chip.className = 'chip';
+                        chip.textContent = s;
+                        row.appendChild(chip);
+                    });
+                    group.appendChild(row);
+                    similarEl.appendChild(group);
+                }
+            });
+
+            if (!anySynonyms) {
+                similarEl.innerHTML = '<div class="empty-note">No similar words listed for this entry.</div>';
+            }
+
+            entry.classList.add('visible');
+        }
+
+        audioBtn.addEventListener('click', () => {
+            if (!currentAudio) return;
+            new Audio(currentAudio).play();
         });
-        group.appendChild(row);
-        similarEl.appendChild(group);
-      }
-    });
-
-    if (!anySynonyms) {
-      similarEl.innerHTML = '<div class="empty-note">No similar words listed for this entry.</div>';
-    }
-
-    entry.classList.add('visible');
-  }
-
-  audioBtn.addEventListener('click', () => {
-    if (!currentAudio) return;
-    new Audio(currentAudio).play();
-  });
-</script>
+    </script>
 </body>
 </html>
